@@ -10,8 +10,8 @@ import { Task } from '../models/task';
 export class ApiService {
   readonly #storage = inject(LocalStorageService);
 
-  getTasksList(): Observable<TasksListItem[]> {
-    return of([]);
+  getTasks(): Observable<Task[]> {
+    return of(this.#storage.selectTasks());
   }
 
   postTask(task: Task): Observable<Task> {

@@ -23,3 +23,20 @@ export const addNewTask$ = createEffect(
   },
   { functional: true }
 );
+
+export const loadTasksList$ = createEffect(
+  (actions$ = inject(Actions), apiService = inject(ApiService)) => {
+    return actions$.pipe(
+      ofType(tasksListPageActions.loadTasksList),
+      exhaustMap(() =>
+        apiService.getTasks().pipe(
+          map((tasks) => tasksListApiActions.loadTasksListSuccess({ tasks })),
+          catchError((error) => {
+            return of(tasksListApiActions.loadTasksListFailure({ error }));
+          })
+        )
+      )
+    );
+  },
+  { functional: true }
+);
