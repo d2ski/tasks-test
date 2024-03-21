@@ -3,11 +3,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { TasksListItem } from '../../../shared/models/tasks-list-item';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-tasks-list-view',
   standalone: true,
-  imports: [MatIconModule, MatCardModule, MatButtonModule],
+  imports: [MatIconModule, MatCardModule, MatButtonModule, RouterLink],
   templateUrl: './tasks-list-view.component.html',
   styleUrl: './tasks-list-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
