@@ -1,0 +1,12 @@
+@for (item of tasksList; track item.id) {
+<mat-card class="task-card">
+  <mat-card-content class="task-card-content">
+    <div class="task-title">{{ item.title }}</div>
+    <div class="task-controls">
+      <a mat-icon-button>
+        <mat-icon>double_arrow</mat-icon>
+      </a>
+    </div>
+  </mat-card-content>
+</mat-card>
+}
