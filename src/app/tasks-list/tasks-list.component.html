@@ -1,0 +1,25 @@
+<h1>Таск-трэкер</h1>
+
+@if (taskToAdd()) {
+<app-task-add-form
+  [taskAddForm]="taskAddForm"
+  (close)="taskToAdd.set(null)"
+  (save)="saveTask()"
+></app-task-add-form>
+} @else {
+<button
+  (click)="taskToAdd.set({})"
+  mat-flat-button
+  color="primary"
+  class="new-task-add-btn"
+>
+  <mat-icon>add</mat-icon>
+  Добавить задачу
+</button>
+}
+
+<div>
+  @for (item of tasksList(); track item.id) {
+  <div>{{ item.title }}</div>
+  }
+</div>

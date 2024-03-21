@@ -1,0 +1,27 @@
+<form
+  [formGroup]="taskAddForm"
+  (ngSubmit)="saveAndClose()"
+  (keyup.enter)="saveAndClose()"
+  class="new-task-form"
+>
+  <mat-form-field class="task-title-input">
+    <mat-label>Новая задача</mat-label>
+    <textarea
+      matInput
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="10"
+      placeholder="Введите название задачи..."
+      formControlName="title"
+      (keydown.enter)="(false)"
+      (keypress.enter)="(false)"
+      (keyup.enter)="(false)"
+    ></textarea>
+  </mat-form-field>
+  <button mat-icon-button [disabled]="!taskAddForm.valid" type="submit">
+    <mat-icon>add_task</mat-icon>
+  </button>
+  <button (click)="close.emit()" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</form>
