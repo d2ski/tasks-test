@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { tasksListPageActions } from './tasks-list.actions';
 import { AddTasksListItem } from '../../../shared/models/tasks-list-item';
 import { selectTasksListItems } from './tasks-list.selectors';
+import { Task, TaskStatus } from '../../../shared/models/task';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,15 @@ export class TasksListFacade {
   }
 
   public addTask(task: AddTasksListItem): void {
-    this.#store.dispatch(tasksListPageActions.addNewTask({ task }));
+    const newTask: Task = {
+      ...task,
+      description: null,
+      id: Date.now(),
+      assigneeId: null,
+      dueDate: null,
+      priority: null,
+      status: TaskStatus.PENDING,
+    };
+    this.#store.dispatch(tasksListPageActions.addNewTask({ task: newTask }));
   }
 }

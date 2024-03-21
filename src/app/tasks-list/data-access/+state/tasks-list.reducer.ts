@@ -41,17 +41,7 @@ export const tasksListFeature = createFeature({
       loadStatus: LoadStatus.LOADING,
     })),
     on(tasksListPageActions.addNewTask, (state, { task }) =>
-      tasksListAdapter.addOne(
-        {
-          ...task,
-          id: Date.now(),
-          assigneeId: null,
-          dueDate: null,
-          priority: null,
-          status: TaskStatus.PENDING,
-        },
-        state
-      )
+      tasksListAdapter.addOne(task, state)
     )
   ),
 });
