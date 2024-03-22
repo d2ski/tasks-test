@@ -18,15 +18,9 @@
     <div class="priority-control">
       <div class="control-label">Приоритет:</div>
       <mat-button-toggle-group name="priority" formControlName="priority">
-        <mat-button-toggle [value]="priorityValues.LOW"
-          >Низкий</mat-button-toggle
-        >
-        <mat-button-toggle [value]="priorityValues.MEDIUM"
-          >Средний</mat-button-toggle
-        >
-        <mat-button-toggle [value]="priorityValues.HIGH"
-          >Высокий</mat-button-toggle
-        >
+        @for (item of priorityValues; track $index) {
+        <mat-button-toggle [value]="item[0]">{{ item[1] }}</mat-button-toggle>
+        }
       </mat-button-toggle-group>
     </div>
 
@@ -63,7 +57,12 @@
       ></textarea>
     </mat-form-field>
 
-    <button mat-flat-button color="primary" type="submit">
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="!taskForm.valid || !taskForm.touched"
+    >
       <mat-icon>save</mat-icon>
       Сохранить
     </button>

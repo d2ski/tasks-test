@@ -11,10 +11,12 @@ export class ApiService {
   readonly #storage = inject(LocalStorageService);
 
   getTasks(): Observable<Task[]> {
+    // симуляция запроса на бэкенд с задержкой ответа
     return timer(1000).pipe(switchMap(() => of(this.#storage.selectTasks())));
   }
 
   getTaskById(id: number): Observable<Task> {
+    // симуляция запроса на бэкенд с задержкой ответа
     return timer(1000).pipe(
       switchMap(() => of(this.#storage.selectTaskById(id)))
     );

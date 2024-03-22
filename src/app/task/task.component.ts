@@ -10,14 +10,9 @@ import {
 import { TaskFacade } from './data-access/task.facade';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TaskViewFormComponent } from './ui/task-view-form/task-view-form.component';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Task, TaskStatus } from '../shared/models/task';
 import { TaskForm } from '../shared/models/task-form';
 import { UsersFacade } from '../users/data-access/+state/users.facade';
@@ -33,8 +28,9 @@ import { UsersFacade } from '../users/data-access/+state/users.facade';
 export default class TaskComponent implements OnInit {
   @Input() taskId!: string;
 
-  #taskFacade = inject(TaskFacade);
-  #usersFacade = inject(UsersFacade);
+  readonly #taskFacade = inject(TaskFacade);
+  readonly #usersFacade = inject(UsersFacade);
+  readonly #router = inject(Router);
 
   taskIsLoading = this.#taskFacade.taskIsLoading;
   error = this.#taskFacade.error;
@@ -43,7 +39,10 @@ export default class TaskComponent implements OnInit {
   isTaskPending = computed(() => this.task()?.status === TaskStatus.PENDING);
 
   taskForm = new FormGroup<TaskForm>({
-    title: new FormControl('', { nonNullable: true }),
+    title: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
     description: new FormControl(''),
     assigneeId: new FormControl(),
     dueDate: new FormControl(),
@@ -76,7 +75,6 @@ export default class TaskComponent implements OnInit {
   }
 
   public toogleTaskStatus() {
-    // this.#taskFacade.setAsDone(+this.taskId);
     const task = this.task();
 
     if (task) {
@@ -90,5 +88,20 @@ export default class TaskComponent implements OnInit {
         status,
       });
     }
+  }
+
+  onTaskUpdate() {
+    const task = this.task();
+
+    if (task) {
+      const taskData = this.taskForm.getRawValue();
+
+      this.#taskFacade.updateTask({
+        ...task,
+        ...taskData,
+      });
+    }
+
+    this.#router.navigateByUrl('/list');
   }
 }

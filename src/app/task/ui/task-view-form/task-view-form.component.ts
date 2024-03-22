@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TaskForm } from '../../../shared/models/task-form';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +17,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { TaskPriority } from '../../../shared/models/task';
 import { User } from '../../../shared/models/user';
+import { TASK_PRIORITY_DISPLAY } from './task-priority-display.const';
 
 @Component({
   selector: 'app-task-view-form',
@@ -34,10 +41,11 @@ import { User } from '../../../shared/models/user';
 export class TaskViewFormComponent {
   @Input({ required: true }) taskForm!: FormGroup<TaskForm>;
   @Input() assignees: User[] = [];
+  @Output() update = new EventEmitter<void>();
 
-  readonly priorityValues = TaskPriority;
+  readonly priorityValues = Object.entries(TASK_PRIORITY_DISPLAY);
 
   onSubmit() {
-    console.log(this.taskForm.getRawValue());
+    this.update.emit();
   }
 }

@@ -20,6 +20,7 @@
   <app-task-view-form
     [taskForm]="taskForm"
     [assignees]="users()"
+    (update)="onTaskUpdate()"
   ></app-task-view-form>
   }
 </div>
