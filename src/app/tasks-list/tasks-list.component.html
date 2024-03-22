@@ -1,23 +1,31 @@
 <div class="container">
   <h1>Таск-трэкер</h1>
 
-  @if (taskToAdd()) {
-  <app-task-add-form
-    [taskAddForm]="taskAddForm"
-    (close)="taskToAdd.set(null)"
-    (save)="saveTask()"
-  ></app-task-add-form>
-  } @else {
-  <button
-    (click)="taskToAdd.set({})"
-    mat-flat-button
-    color="primary"
-    class="new-task-add-btn"
-  >
-    <mat-icon>add</mat-icon>
-    Добавить задачу
-  </button>
-  }
+  <div class="task-add">
+    @if (taskToAdd()) {
+    <app-task-add-form
+      [taskAddForm]="taskAddForm"
+      (close)="taskToAdd.set(null)"
+      (save)="saveTask()"
+    ></app-task-add-form>
+    } @else {
+    <button
+      (click)="taskToAdd.set({})"
+      mat-flat-button
+      color="primary"
+      class="new-task-add-btn"
+    >
+      <mat-icon>add</mat-icon>
+      Добавить задачу
+    </button>
+    }
+  </div>
 
-  <app-tasks-list-view [tasksList]="tasksList()"></app-tasks-list-view>
+  <div class="tasks-list">
+    @if(tasksAreLoaded()) {
+    <app-tasks-list-view [tasksList]="tasksList()"></app-tasks-list-view>
+    } @else {
+    <div>Загрузка...</div>
+    }
+  </div>
 </div>

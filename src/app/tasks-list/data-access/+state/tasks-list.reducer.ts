@@ -44,7 +44,10 @@ export const tasksListFeature = createFeature({
       loadStatus: LoadStatus.LOADING,
     })),
     on(tasksListApiActions.loadTasksListSuccess, (state, { tasks }) =>
-      tasksListAdapter.upsertMany(tasks, state)
+      tasksListAdapter.upsertMany(tasks, {
+        ...state,
+        loadStatus: LoadStatus.LOADED,
+      })
     ),
     on(tasksListPageActions.addNewTask, (state, { task }) =>
       tasksListAdapter.addOne(task, state)

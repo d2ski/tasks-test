@@ -2,7 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { tasksListPageActions } from './tasks-list.actions';
 import { AddTasksListItem } from '../../../shared/models/tasks-list-item';
-import { selectTasksListItems } from './tasks-list.selectors';
+import {
+  selectTasksAreLoaded,
+  selectTasksListItems,
+} from './tasks-list.selectors';
 import { Task, TaskStatus } from '../../../shared/models/task';
 
 @Injectable({
@@ -10,6 +13,8 @@ import { Task, TaskStatus } from '../../../shared/models/task';
 })
 export class TasksListFacade {
   readonly #store = inject(Store);
+
+  tasksAreLoaded = this.#store.selectSignal(selectTasksAreLoaded);
   tasksList = this.#store.selectSignal(selectTasksListItems);
 
   public getTasksList(): void {

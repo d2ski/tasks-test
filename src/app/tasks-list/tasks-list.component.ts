@@ -32,6 +32,7 @@ export default class TasksListComponent implements OnInit {
   readonly #formBuilder = inject(FormBuilder);
   readonly #tasksListFacade = inject(TasksListFacade);
 
+  tasksAreLoaded = this.#tasksListFacade.tasksAreLoaded;
   tasksList = this.#tasksListFacade.tasksList;
 
   taskToAdd = signal<Partial<AddTasksListItem> | null>(null);

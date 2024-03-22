@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { TasksListItem } from '../models/tasks-list-item';
-import { EMPTY, Observable, of } from 'rxjs';
+import { EMPTY, Observable, of, switchMap, timer } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { Task } from '../models/task';
 
@@ -11,7 +11,7 @@ export class ApiService {
   readonly #storage = inject(LocalStorageService);
 
   getTasks(): Observable<Task[]> {
-    return of(this.#storage.selectTasks());
+    return timer(1000).pipe(switchMap(() => of(this.#storage.selectTasks())));
   }
 
   postTask(task: Task): Observable<Task> {
