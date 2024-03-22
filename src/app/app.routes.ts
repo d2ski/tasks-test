@@ -6,6 +6,10 @@ export const routes: Routes = [
     loadComponent: () => import('./tasks-list/tasks-list.component'),
   },
   {
+    path: 'task/:taskId',
+    loadComponent: () => import('./task/task.component'),
+  },
+  {
     path: '',
     redirectTo: 'list',
     pathMatch: 'full',

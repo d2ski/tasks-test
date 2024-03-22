@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="header">
+    @if (!error() && !taskIsLoading()) {
+    <button (click)="toogleTaskStatus()" mat-flat-button color="primary">
+      @if (isTaskPending()) { Завершить } @else { Переоткрыть }
+    </button>
+    }
+
+    <a [routerLink]="['/list']" mat-stroked-button>
+      <mat-icon>arrow_back</mat-icon>
+      К списку задач
+    </a>
+  </div>
+
+  @if (taskIsLoading()) {
+  <div>Загрузка...</div>
+  } @else if (error()) {
+  <div>{{ error() }}</div>
+  } @else {
+  <app-task-view-form
+    [taskForm]="taskForm"
+    [assignees]="users()"
+  ></app-task-view-form>
+  }
+</div>

@@ -18,6 +18,17 @@ export class LocalStorageService {
     return [];
   }
 
+  selectTaskById(id: number): Task {
+    const tasks = this.selectTasks();
+    const selectedTask = tasks.find((t) => t.id === id);
+
+    if (!selectedTask) {
+      throw new Error('Not found');
+    }
+
+    return selectedTask;
+  }
+
   upsertTask(task: Task): void {
     const tasks = this.selectTasks();
     const filteredTasks = tasks.filter((t) => t.id !== task.id);

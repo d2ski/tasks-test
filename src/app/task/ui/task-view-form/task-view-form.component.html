@@ -1,0 +1,71 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="update-task-form">
+  <div class="container">
+    <mat-form-field class="task-title-input">
+      <mat-label>Задача</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="10"
+        placeholder="Введите название задачи..."
+        formControlName="title"
+        (keydown.enter)="(false)"
+        (keypress.enter)="(false)"
+        (keyup.enter)="(false)"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="priority-control">
+      <div class="control-label">Приоритет:</div>
+      <mat-button-toggle-group name="priority" formControlName="priority">
+        <mat-button-toggle [value]="priorityValues.LOW"
+          >Низкий</mat-button-toggle
+        >
+        <mat-button-toggle [value]="priorityValues.MEDIUM"
+          >Средний</mat-button-toggle
+        >
+        <mat-button-toggle [value]="priorityValues.HIGH"
+          >Высокий</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Срок выполнения</mat-label>
+      <input formControlName="dueDate" matInput [matDatepicker]="picker" />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Испольнитель</mat-label>
+      <mat-select matNativeControl formControlName="assigneeId">
+        @for (item of assignees; track item.id) {
+        <mat-option [value]="item.id">{{ item.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="task-description-input">
+      <mat-label>Описание задачи</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="5"
+        cdkAutosizeMaxRows="10"
+        formControlName="description"
+        (keydown.enter)="(false)"
+        (keypress.enter)="(false)"
+        (keyup.enter)="(false)"
+      ></textarea>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit">
+      <mat-icon>save</mat-icon>
+      Сохранить
+    </button>
+  </div>
+</form>

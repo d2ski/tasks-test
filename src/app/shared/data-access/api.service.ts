@@ -14,6 +14,12 @@ export class ApiService {
     return timer(1000).pipe(switchMap(() => of(this.#storage.selectTasks())));
   }
 
+  getTaskById(id: number): Observable<Task> {
+    return timer(1000).pipe(
+      switchMap(() => of(this.#storage.selectTaskById(id)))
+    );
+  }
+
   postTask(task: Task): Observable<Task> {
     this.#storage.upsertTask(task);
 
