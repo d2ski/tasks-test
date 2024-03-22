@@ -17,7 +17,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { TaskPriority } from '../../../shared/models/task';
 import { User } from '../../../shared/models/user';
-import { TASK_PRIORITY_DISPLAY } from './task-priority-display.const';
+import { TASK_PRIORITY_DISPLAY } from '../../../shared/models/task-priority-display.const';
 
 @Component({
   selector: 'app-task-view-form',

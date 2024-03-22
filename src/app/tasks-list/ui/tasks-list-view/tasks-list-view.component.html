@@ -1,7 +1,31 @@
 @for (item of tasksList; track item.id) {
 <mat-card class="task-card">
   <mat-card-content class="task-card-content">
-    <div class="task-title">{{ item.title }}</div>
+    <div class="task-content">
+      <div class="task-header">
+        @if (item.status === statusValues.DONE) {
+        <mat-icon class="task-status-icon">done</mat-icon>
+        }
+        <div class="task-title">{{ item.title }}</div>
+      </div>
+      <div class="task-details">
+        @if (item.dueDate) {
+        <div class="task-date">
+          <mat-icon>alarm</mat-icon>
+          <span>{{ item.dueDate | date : "shortDate" }}</span>
+        </div>
+        } @if (item.priority) {
+        <div class="task-priority">
+          {{ priorityValues[item.priority] }}
+        </div>
+        } @if (item.assigneeId) {
+        <div class="task-assignee">
+          <mat-icon>person</mat-icon>
+          <span>{{ item.assigneeId }}</span>
+        </div>
+        }
+      </div>
+    </div>
     <div class="task-controls">
       <a [routerLink]="['/task', item.id]" mat-icon-button>
         <mat-icon>double_arrow</mat-icon>
