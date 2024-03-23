@@ -3,6 +3,7 @@ import { TasksListItem } from '../models/tasks-list-item';
 import { EMPTY, Observable, of, switchMap, timer } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { Task } from '../models/task';
+import { TasksFilter } from '../models/tasks-filter';
 
 @Injectable({
   providedIn: 'root',
@@ -10,21 +11,31 @@ import { Task } from '../models/task';
 export class ApiService {
   readonly #storage = inject(LocalStorageService);
 
-  getTasks(): Observable<Task[]> {
+  public getTasks(): Observable<Task[]> {
     // симуляция запроса на бэкенд с задержкой ответа
     return timer(1000).pipe(switchMap(() => of(this.#storage.selectTasks())));
   }
 
-  getTaskById(id: number): Observable<Task> {
+  public getTaskById(id: number): Observable<Task> {
     // симуляция запроса на бэкенд с задержкой ответа
     return timer(1000).pipe(
       switchMap(() => of(this.#storage.selectTaskById(id)))
     );
   }
 
-  postTask(task: Task): Observable<Task> {
+  public postTask(task: Task): Observable<Task> {
     this.#storage.upsertTask(task);
 
     return of(task);
+  }
+
+  public getFilter(): Observable<TasksFilter> {
+    return timer(200).pipe(switchMap(() => of(this.#storage.selectFilter())));
+  }
+
+  public postFilter(filter: TasksFilter): Observable<TasksFilter> {
+    this.#storage.upsertFilter(filter);
+
+    return of(filter);
   }
 }

@@ -21,6 +21,15 @@
     }
   </div>
 
+  @if (tasksAreLoaded()) {
+  <div class="tasks-filter">
+    <app-tasks-filter-form
+      [filterForm]="filterForm"
+      (update)="onFilterUpdate()"
+    ></app-tasks-filter-form>
+  </div>
+  }
+
   <div class="tasks-list">
     @if(tasksAreLoaded()) {
     <app-tasks-list-view [tasksList]="tasksList()"></app-tasks-list-view>

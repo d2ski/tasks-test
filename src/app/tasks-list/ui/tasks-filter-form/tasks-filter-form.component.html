@@ -1,0 +1,9 @@
+<form [formGroup]="filterForm" (ngSubmit)="onSubmit()" (change)="onSubmit()">
+  <div class="status-filter">
+    <mat-chip-listbox name="status" formControlName="status">
+      @for (item of statusValues; track $index) {
+      <mat-chip-option [value]="item[0]">{{ item[1] }}</mat-chip-option>
+      }
+    </mat-chip-listbox>
+  </div>
+</form>

@@ -6,25 +6,14 @@ import {
   tasksListApiActions,
   tasksListPageActions,
 } from './tasks-list.actions';
-import { TaskPriority, TaskStatus } from '../../../shared/models/task';
-
-export interface FilterState {
-  status: TaskStatus[];
-  priority: TaskPriority[];
-  assigneeId: Exclude<TasksListItem['assigneeId'], null>[];
-  dueDate: Exclude<TasksListItem['dueDate'], null>[];
-}
-
-export const intialFilterState: FilterState = {
-  status: [],
-  priority: [],
-  assigneeId: [],
-  dueDate: [],
-};
+import {
+  TasksFilter,
+  intialFilterState,
+} from '../../../shared/models/tasks-filter';
 
 export interface TasksListState extends EntityState<TasksListItem> {
   loadStatus: LoadStatus;
-  filter: FilterState;
+  filter: TasksFilter;
 }
 
 export const tasksListAdapter: EntityAdapter<TasksListItem> =
@@ -51,6 +40,14 @@ export const tasksListFeature = createFeature({
     ),
     on(tasksListPageActions.addNewTask, (state, { task }) =>
       tasksListAdapter.addOne(task, state)
-    )
+    ),
+    on(tasksListApiActions.loadFilterSuccess, (state, { filter }) => ({
+      ...state,
+      filter,
+    })),
+    on(tasksListPageActions.setFilter, (state, { filter }) => ({
+      ...state,
+      filter,
+    }))
   ),
 });

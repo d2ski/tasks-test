@@ -40,3 +40,37 @@ export const loadTasksList$ = createEffect(
   },
   { functional: true }
 );
+
+export const loadFilter$ = createEffect(
+  (actions$ = inject(Actions), apiService = inject(ApiService)) => {
+    return actions$.pipe(
+      ofType(tasksListPageActions.loadFilter),
+      exhaustMap(() =>
+        apiService.getFilter().pipe(
+          map((filter) => tasksListApiActions.loadFilterSuccess({ filter })),
+          catchError((error) => {
+            return of(tasksListApiActions.loadFilterFailure({ error }));
+          })
+        )
+      )
+    );
+  },
+  { functional: true }
+);
+
+export const setFilter$ = createEffect(
+  (actions$ = inject(Actions), apiService = inject(ApiService)) => {
+    return actions$.pipe(
+      ofType(tasksListPageActions.setFilter),
+      exhaustMap(({ filter }) =>
+        apiService.postFilter(filter).pipe(
+          map(() => tasksListApiActions.setFilterSuccess()),
+          catchError((error) => {
+            return of(tasksListApiActions.setFilterFailure({ error }));
+          })
+        )
+      )
+    );
+  },
+  { functional: true }
+);
