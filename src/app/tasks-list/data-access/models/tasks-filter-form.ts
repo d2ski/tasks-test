@@ -1,6 +1,9 @@
 import { FormControl } from '@angular/forms';
-import { Task } from '../../../shared/models/task';
+import { TasksFilter } from '../../../shared/models/tasks-filter';
 
 export type TasksFilterForm = {
-  status: FormControl<Task['status']>;
+  status: FormControl<TasksFilter['status']>;
+  priority: FormControl<TasksFilter['priority']>;
+  assigneeId: FormControl<TasksFilter['assigneeId']>;
+  dueDate: FormControl<TasksFilter['dueDate']>;
 };

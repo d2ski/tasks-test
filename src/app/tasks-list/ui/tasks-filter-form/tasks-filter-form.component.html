@@ -1,9 +1,55 @@
 <form [formGroup]="filterForm" (ngSubmit)="onSubmit()" (change)="onSubmit()">
-  <div class="status-filter">
-    <mat-chip-listbox name="status" formControlName="status">
+  <div class="filter status">
+    <mat-button-toggle-group name="status" formControlName="status">
       @for (item of statusValues; track $index) {
-      <mat-chip-option [value]="item[0]">{{ item[1] }}</mat-chip-option>
+      <mat-button-toggle [value]="item[0]">{{ item[1] }}</mat-button-toggle>
       }
-    </mat-chip-listbox>
+    </mat-button-toggle-group>
+  </div>
+  <div class="filter priority">
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Приоритет</mat-label>
+      <mat-select formControlName="priority" multiple>
+        @for (item of priorityValues; track $index) {
+        <mat-option [value]="item[0]">{{ item[1] }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  @if (assigneeIds) {
+  <div class="filter assignees">
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Исполнители</mat-label>
+      <mat-select formControlName="assigneeId" multiple>
+        @for (item of assigneeIds; track $index) {
+        <mat-option [value]="item">{{ item }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  }
+
+  <div class="filter date">
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Срок выполнения</mat-label>
+      <input formControlName="dueDate" matInput [matDatepicker]="picker" />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="filter submit">
+    <button
+      mat-stroked-button
+      type="submit"
+      [disabled]="!filterForm.valid || !filterForm.touched"
+    >
+      <mat-icon>sync</mat-icon>
+      Применить
+    </button>
   </div>
 </form>

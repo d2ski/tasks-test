@@ -1,2 +1,25 @@
-.status-filter {
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 1rem;
+  border: 1px solid #eaeaea;
+  padding: 0.5rem;
+
+  .filter {
+    width: 256px;
+
+    mat-form-field,
+    mat-button-toggle-group {
+      width: 100%;
+    }
+
+    mat-button-toggle {
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
 }

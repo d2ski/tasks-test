@@ -23,10 +23,17 @@
 
   @if (tasksAreLoaded()) {
   <div class="tasks-filter">
+    <button mat-button (click)="toogleFilter()">
+      <mat-icon>@if (!showFilters) {tune} @else {close}</mat-icon>
+      Фильтры
+    </button>
+    @if (showFilters ) {
     <app-tasks-filter-form
       [filterForm]="filterForm"
+      [assigneeIds]="assigneeIds()"
       (update)="onFilterUpdate()"
-    ></app-tasks-filter-form>
+    ></app-tasks-filter-form
+    >}
   </div>
   }
 

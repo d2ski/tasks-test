@@ -5,6 +5,14 @@ import {
   TasksListState,
 } from './tasks-list.reducer';
 import { LoadStatus } from '../../../shared/models/load-status';
+import { TasksListItem } from '../../../shared/models/tasks-list-item';
+import { TasksFilter } from '../../../shared/models/tasks-filter';
+import {
+  filterByStatus,
+  filterByPriority,
+  filterByAssigneeId,
+  filterByDueDate,
+} from '../../utils/task-filters';
 
 export const { selectTasksListState, selectFilter } = tasksListFeature;
 
@@ -23,6 +31,12 @@ export const selectTasksListItems = createSelector(
 export const selectFilteredTasksListItems = createSelector(
   selectTasksListItems,
   selectFilter,
-  (tasksListItems, filter) =>
-    tasksListItems.filter((task) => task.status === filter.status)
+  (tasksListItems: TasksListItem[], filter: TasksFilter) =>
+    tasksListItems.filter(
+      (task) =>
+        filterByStatus(task, filter) &&
+        filterByPriority(task, filter) &&
+        filterByAssigneeId(task, filter) &&
+        filterByDueDate(task, filter)
+    )
 );

@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   OnInit,
@@ -19,8 +20,9 @@ import { TaskAddFormComponent } from './ui/task-add-form/task-add-form.component
 import { AddTasksListItem } from '../shared/models/tasks-list-item';
 import { TasksListViewComponent } from './ui/tasks-list-view/tasks-list-view.component';
 import { TasksFilterFormComponent } from './ui/tasks-filter-form/tasks-filter-form.component';
-import { Task, TaskStatus } from '../shared/models/task';
+import { TaskStatus } from '../shared/models/task';
 import { TasksFilterForm } from './data-access/models/tasks-filter-form';
+import { UsersFacade } from '../users/data-access/+state/users.facade';
 
 @Component({
   selector: 'app-tasks-list',
@@ -39,12 +41,23 @@ import { TasksFilterForm } from './data-access/models/tasks-filter-form';
 export default class TasksListComponent implements OnInit {
   readonly #formBuilder = inject(FormBuilder);
   readonly #tasksListFacade = inject(TasksListFacade);
+  readonly #usersFacade = inject(UsersFacade);
 
   tasksAreLoaded = this.#tasksListFacade.tasksAreLoaded;
   tasksList = this.#tasksListFacade.tasksList;
   filter = this.#tasksListFacade.filter;
+  #users = this.#usersFacade.users;
+
+  showFilters = false;
+
+  assigneeIds = computed(() => {
+    const users = this.#users();
+
+    return users.map((user) => user.id);
+  });
 
   taskToAdd = signal<Partial<AddTasksListItem> | null>(null);
+
   readonly taskAddForm = this.#formBuilder.nonNullable.group({
     title: ['', Validators.required],
   });
@@ -53,6 +66,9 @@ export default class TasksListComponent implements OnInit {
     status: new FormControl(TaskStatus.PENDING, {
       nonNullable: true,
     }),
+    priority: new FormControl([], { nonNullable: true }),
+    assigneeId: new FormControl([], { nonNullable: true }),
+    dueDate: new FormControl(),
   });
 
   constructor() {
@@ -85,5 +101,9 @@ export default class TasksListComponent implements OnInit {
     const filter = this.filterForm.getRawValue();
 
     this.#tasksListFacade.setFilter(filter);
+  }
+
+  toogleFilter() {
+    this.showFilters = !this.showFilters;
   }
 }
