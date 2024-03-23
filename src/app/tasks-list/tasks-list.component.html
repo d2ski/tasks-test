@@ -25,7 +25,7 @@
   <div class="tasks-filter">
     <button mat-button (click)="toogleFilter()">
       <mat-icon>@if (!showFilters) {tune} @else {close}</mat-icon>
-      Фильтры
+      Фильтры и сортировка
     </button>
     @if (showFilters ) {
     <app-tasks-filter-form

@@ -42,6 +42,17 @@
     </mat-form-field>
   </div>
 
+  <div class="filter sorting">
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Сортировка</mat-label>
+      <mat-select formControlName="sorting">
+        @for (item of sortingValues; track $index) {
+        <mat-option [value]="item[0]">{{ item[1] }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <div class="filter submit">
     <button
       mat-stroked-button

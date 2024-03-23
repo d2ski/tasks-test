@@ -6,13 +6,15 @@ import {
 } from './tasks-list.reducer';
 import { LoadStatus } from '../../../shared/models/load-status';
 import { TasksListItem } from '../../../shared/models/tasks-list-item';
-import { TasksFilter } from '../../../shared/models/tasks-filter';
+import { SortOrder, TasksFilter } from '../../../shared/models/tasks-filter';
 import {
   filterByStatus,
   filterByPriority,
   filterByAssigneeId,
   filterByDueDate,
 } from '../../utils/task-filters';
+import { TaskPriority } from '../../../shared/models/task';
+import { sortBy } from '../../utils/task-sorters';
 
 export const { selectTasksListState, selectFilter } = tasksListFeature;
 
@@ -32,11 +34,13 @@ export const selectFilteredTasksListItems = createSelector(
   selectTasksListItems,
   selectFilter,
   (tasksListItems: TasksListItem[], filter: TasksFilter) =>
-    tasksListItems.filter(
-      (task) =>
-        filterByStatus(task, filter) &&
-        filterByPriority(task, filter) &&
-        filterByAssigneeId(task, filter) &&
-        filterByDueDate(task, filter)
-    )
+    tasksListItems
+      .filter(
+        (task) =>
+          filterByStatus(task, filter) &&
+          filterByPriority(task, filter) &&
+          filterByAssigneeId(task, filter) &&
+          filterByDueDate(task, filter)
+      )
+      .sort(sortBy[filter.sorting])
 );

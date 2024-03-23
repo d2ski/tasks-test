@@ -21,8 +21,9 @@ import { AddTasksListItem } from '../shared/models/tasks-list-item';
 import { TasksListViewComponent } from './ui/tasks-list-view/tasks-list-view.component';
 import { TasksFilterFormComponent } from './ui/tasks-filter-form/tasks-filter-form.component';
 import { TaskStatus } from '../shared/models/task';
-import { TasksFilterForm } from './data-access/models/tasks-filter-form';
+import { TasksFilterForm } from '../shared/models/tasks-filter-form';
 import { UsersFacade } from '../users/data-access/+state/users.facade';
+import { SortOrder } from '../shared/models/tasks-filter';
 
 @Component({
   selector: 'app-tasks-list',
@@ -69,6 +70,7 @@ export default class TasksListComponent implements OnInit {
     priority: new FormControl([], { nonNullable: true }),
     assigneeId: new FormControl([], { nonNullable: true }),
     dueDate: new FormControl(),
+    sorting: new FormControl(SortOrder.DUE_DATE, { nonNullable: true }),
   });
 
   constructor() {
@@ -98,9 +100,9 @@ export default class TasksListComponent implements OnInit {
   }
 
   onFilterUpdate(): void {
-    const filter = this.filterForm.getRawValue();
+    const updatedFilter = this.filterForm.getRawValue();
 
-    this.#tasksListFacade.setFilter(filter);
+    this.#tasksListFacade.setFilter(updatedFilter);
   }
 
   toogleFilter() {

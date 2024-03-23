@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TasksFilterForm } from '../../data-access/models/tasks-filter-form';
+import { TasksFilterForm } from '../../../shared/models/tasks-filter-form';
 import { TASK_STATUS_DISPLAY } from '../../../shared/models/task-status-display.const';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +17,7 @@ import { TasksFilter } from '../../../shared/models/tasks-filter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { SORT_ORDER_DISPLAY } from '../../../shared/models/sort-order-display.const';
 
 @Component({
   selector: 'app-tasks-filter-form',
@@ -42,6 +43,7 @@ export class TasksFilterFormComponent {
 
   readonly statusValues = Object.entries(TASK_STATUS_DISPLAY);
   readonly priorityValues = Object.entries(TASK_PRIORITY_DISPLAY);
+  readonly sortingValues = Object.entries(SORT_ORDER_DISPLAY);
 
   onSubmit() {
     console.log(this.filterForm.getRawValue());
