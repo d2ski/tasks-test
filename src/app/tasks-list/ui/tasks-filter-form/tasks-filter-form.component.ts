@@ -46,7 +46,6 @@ export class TasksFilterFormComponent {
   readonly sortingValues = Object.entries(SORT_ORDER_DISPLAY);
 
   onSubmit() {
-    console.log(this.filterForm.getRawValue());
     this.update.emit();
   }
 }
